@@ -14,7 +14,7 @@ namespace KCT.HotkeyAPI
 		private readonly int id;
 		private bool isKeyRegistered;
 		private readonly IntPtr handle;
-        private bool disposed;
+		private bool disposed;
 
 		public Hotkey(ModifierKeys modifierKeys, Keys key, Window window)
 			: this(modifierKeys, key, new WindowInteropHelper(window))
@@ -25,13 +25,13 @@ namespace KCT.HotkeyAPI
 		public Hotkey(ModifierKeys modifierKeys, Keys key, WindowInteropHelper window)
 			: this(modifierKeys, key, window.Handle)
 		{
-            Contract.Assert(window != null, "Window cannot be null.");
+			Contract.Assert(window != null, "Window cannot be null.");
 		}
 
 		public Hotkey(ModifierKeys modifierKeys, Keys key, IntPtr windowHandle)
 		{
-            Contract.Assert(modifierKeys != ModifierKeys.None || key != Keys.None, "At least a modifier key or a key is required.");
-            Contract.Assert(windowHandle != IntPtr.Zero, "Windows handle cannot be 0");
+			Contract.Assert(modifierKeys != ModifierKeys.None || key != Keys.None, "At least a modifier key or a key is required.");
+			Contract.Assert(windowHandle != IntPtr.Zero, "Windows handle cannot be 0");
 
 			Key = key;
 			KeyModifier = modifierKeys;
@@ -73,7 +73,7 @@ namespace KCT.HotkeyAPI
 
 		private void Dispose(bool disposing)
 		{
-            if (!disposed)
+			if (!disposed)
 			{
 				if (disposing)
 				{
@@ -81,7 +81,7 @@ namespace KCT.HotkeyAPI
 				}
 
 				UnregisterHotKey();
-                disposed = true;
+				disposed = true;
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace KCT.HotkeyAPI
 			if (!handled)
 			{
 				if (msg.message == HotkeyWinApi.WmHotkey
-				    && (int) (msg.wParam) == id)
+					&& (int) (msg.wParam) == id)
 				{
 					OnHotKeyPressed();
 					handled = true;

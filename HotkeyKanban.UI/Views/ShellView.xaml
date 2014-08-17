@@ -2,11 +2,27 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:watermark="clr-namespace:KCT.HotkeyKanban.UI.Controls.Watermark"
              mc:Ignorable="d">
-    <StackPanel>
-        <TextBox x:Name="Input" />
-        <Button x:Name="SayHello"
-                Content="Click Me" />
-    </StackPanel>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <AdornerDecorator Grid.Column="0">
+            <TextBox x:Name="Input"        
+                 Width="200"
+                 cal:Message.Attach="[Event KeyDown] = [Action ExecuteAddTask($pressedkey)]">
+                <watermark:WatermarkService.Watermark>
+                    <TextBlock>Type here to enter new task</TextBlock>
+                </watermark:WatermarkService.Watermark>
+            </TextBox>
+        </AdornerDecorator>
+        <Button x:Name="OpenOptions"
+                Grid.Column="2"
+                Content="Options..." />
+    </Grid>
 </UserControl>

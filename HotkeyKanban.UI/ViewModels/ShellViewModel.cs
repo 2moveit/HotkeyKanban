@@ -1,11 +1,33 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using Caliburn.Micro;
 
 namespace KCT.HotkeyKanban.UI.ViewModels
 {
-    public class ShellViewModel : PropertyChangedBase, IShell
+    public class ShellViewModel : Screen, IShell
     {
-     
+        protected override void OnActivate()
+        {
+            base.OnActivate(); //TODO: FOCUS TBX (IRESULT? FOCUSMANGER? )
+          
+        }
+
+        private readonly IWindowManager windowManager;
+        public ShellViewModel(IWindowManager windowManager)
+        {
+            this.windowManager = windowManager;
+            DisplayName = "Hotkey Kanban";
+        }
+
+        public void ExecuteAddTask(Key key)
+        {
+            if (key == Key.Enter && Input != string.Empty)
+            {
+                AddTask();
+                Input = string.Empty;
+            }
+        }
+
         string input;
 
         public string Input
@@ -15,18 +37,18 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             {
                 input = value;
                 NotifyOfPropertyChange(() => Input);
-                NotifyOfPropertyChange(() => CanSayHello);
             }
         }
 
-        public bool CanSayHello
+
+        public void OpenOptions()
         {
-            get { return !string.IsNullOrWhiteSpace(Input); }
+           windowManager.ShowDialog(new OptionsViewModel());
         }
 
-        public void SayHello()
+        public void AddTask()
         {
-            MessageBox.Show(string.Format("Hello {0}!", Input)); //Don't do this in real life :)
+            MessageBox.Show(string.Format("Added task: {0}", Input));
         }
     }
 }
