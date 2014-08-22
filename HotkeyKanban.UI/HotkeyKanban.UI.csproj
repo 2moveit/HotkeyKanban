@@ -65,6 +65,8 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="AppWindowManager.cs" />
+    <Compile Include="Behavior\FocusBehavior.cs" />
+    <Compile Include="HotkeyPressed.cs" />
     <Compile Include="Controls\Watermark\WatermarkAdorner.cs" />
     <Compile Include="Controls\Watermark\WatermarkService.cs" />
     <Compile Include="IShell.cs" />
@@ -115,7 +117,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotkeyKanban\HotkeyKanban.csproj">
@@ -123,6 +127,7 @@
       <Name>HotkeyKanban</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

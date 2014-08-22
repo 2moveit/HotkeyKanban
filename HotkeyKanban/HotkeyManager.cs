@@ -11,15 +11,10 @@ namespace KCT.HotkeyKanban
 {
     public static class HotkeyManager
     {
-        public static void RegisterWindow(Window window)
+        public static void RegisterWindow(Window window, Action<Window> action)
         {
             var hotkey = new Hotkey(ModifierKeys.Alt, Keys.Space, window);
-            hotkey.HotkeyPressed += (k) =>
-            {  
-                window.Activate();
-                window.WindowState = WindowState.Normal;
-                Console.Beep();
-            };
+            hotkey.HotkeyPressed += (k) => action(window);
         }
     }
 }

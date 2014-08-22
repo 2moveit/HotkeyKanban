@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:watermark="clr-namespace:KCT.HotkeyKanban.UI.Controls.Watermark"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behavior="clr-namespace:KCT.HotkeyKanban.UI.Behavior"
              mc:Ignorable="d">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -13,12 +15,15 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <AdornerDecorator Grid.Column="0">
-            <TextBox x:Name="Input"        
+            <TextBox x:Name="Input"     
                  Width="200"
                  cal:Message.Attach="[Event KeyDown] = [Action ExecuteAddTask($pressedkey)]">
                 <watermark:WatermarkService.Watermark>
                     <TextBlock>Type here to enter new task</TextBlock>
                 </watermark:WatermarkService.Watermark>
+                <i:Interaction.Behaviors>
+                    <behavior:FocusBehavior HasInitialFocus="True" IsFocused="{Binding InputIsFocused, Mode=TwoWay}"/>
+                </i:Interaction.Behaviors>
             </TextBox>
         </AdornerDecorator>
         <Button x:Name="OpenOptions"

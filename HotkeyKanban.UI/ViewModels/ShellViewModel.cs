@@ -1,21 +1,20 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
+using KCT.HotkeyKanban.UI.Views;
 
 namespace KCT.HotkeyKanban.UI.ViewModels
 {
-    public class ShellViewModel : Screen, IShell
+    public sealed class ShellViewModel : Screen, IShell, IHandle<HotkeyPressed>
     {
-        protected override void OnActivate()
-        {
-            base.OnActivate(); //TODO: FOCUS TBX (IRESULT? FOCUSMANGER? )
-          
-        }
-
         private readonly IWindowManager windowManager;
-        public ShellViewModel(IWindowManager windowManager)
+        private readonly IEventAggregator eventAggregator;
+
+        public ShellViewModel(IWindowManager windowManager, IEventAggregator eventAggregator)
         {
             this.windowManager = windowManager;
+            this.eventAggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
             DisplayName = "Hotkey Kanban";
         }
 
@@ -28,6 +27,27 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             }
         }
 
+        public void Handle(HotkeyPressed e)
+        {
+
+            InputIsFocused = true;
+
+        }
+
+        private bool inputIsFocused;
+        public bool InputIsFocused
+        {
+            get { return inputIsFocused; }
+            set
+            {
+                if (inputIsFocused != value)
+                {
+                    inputIsFocused = value;
+                    NotifyOfPropertyChange(() => InputIsFocused);
+                }
+            }
+        }
+
         string input;
 
         public string Input
@@ -35,8 +55,11 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             get { return input; }
             set
             {
-                input = value;
-                NotifyOfPropertyChange(() => Input);
+                if (input != value)
+                {
+                    input = value;
+                    NotifyOfPropertyChange(() => Input);
+                }
             }
         }
 
