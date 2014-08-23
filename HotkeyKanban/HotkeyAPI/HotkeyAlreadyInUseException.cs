@@ -1,6 +1,6 @@
 using System;
 
-namespace KCT.HotkeyAPI
+namespace KCT.HotkeyKanban.HotkeyAPI
 {
     public class HotkeyAlreadyInUseException : Exception
     {

@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KCT.HotkeyKanban.Settings" GeneratedClassName="HotkeySettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Key" Provider="PortableSettingsProvider" Type="KCT.HotkeyKanban.HotkeyAPI.Keys" Scope="User">
+      <Value Profile="(Default)">Space</Value>
+    </Setting>
+    <Setting Name="ModifierKey" Provider="PortableSettingsProvider" Type="KCT.HotkeyKanban.HotkeyAPI.ModifierKeys" Scope="User">
+      <Value Profile="(Default)">Alt</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

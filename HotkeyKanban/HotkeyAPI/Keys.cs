@@ -1,4 +1,4 @@
-﻿namespace KCT.HotkeyAPI
+﻿namespace KCT.HotkeyKanban.HotkeyAPI
 {
 	/// <summary>
 	/// 	Enum from System.Windows.Forms.Keys

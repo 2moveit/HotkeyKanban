@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using KCT.HotkeyAPI;
+using KCT.HotkeyKanban.HotkeyAPI;
+using KCT.HotkeyKanban.Settings;
 
 namespace KCT.HotkeyKanban
 {
     public sealed class HotkeyManager
     {
         #region Singleton
+
         private static readonly HotkeyManager instance = new HotkeyManager();
 
         // Explicit static constructor to tell C# compiler
@@ -26,16 +27,50 @@ namespace KCT.HotkeyKanban
 
         public static HotkeyManager Instance
         {
-            get
-            {
-                return instance;
-            }
+            get { return instance; }
         }
+
         #endregion
-        public void RegisterWindow(Window window, Action<Window> action)
+
+        private Hotkey hotkey;
+        private Window window;
+        private Action<Window> action;
+        public void RegisterWindow(Window hotkeyWindow, Action<Window> hotkeyAction)
         {
-            var hotkey = new Hotkey(ModifierKeys.Alt, Keys.Space, window);
+            window = hotkeyWindow;
+            action = hotkeyAction;
+            Register();
+        }
+
+        public void RegisterHotkey(ModifierKeys keyModifier, Keys hotkey)
+        {
+            HotkeySettings.Default.ModifierKey = keyModifier;
+            HotkeySettings.Default.Key = hotkey;
+            HotkeySettings.Default.Save();
+            Register();
+        }
+
+        private void Register()
+        {
+            if(hotkey != null)
+                hotkey.Dispose();
+            hotkey = new Hotkey(ModifierKey, Key, window);
             hotkey.HotkeyPressed += (k) => action(window);
         }
-    } 
+
+
+        
+
+        public ModifierKeys ModifierKey
+        {
+            get { return HotkeySettings.Default.ModifierKey; }
+        }
+
+
+        public Keys Key
+        {
+            get { return HotkeySettings.Default.Key; }
+        }
+    }
+
 }

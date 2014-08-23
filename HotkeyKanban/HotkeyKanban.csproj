@@ -104,6 +104,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -124,7 +125,14 @@
     <Compile Include="HotkeyAPI\Keys.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HotkeyAPI\ModifierKeys.cs" />
     <Compile Include="HotkeyManager.cs" />
+    <Compile Include="Settings\HotkeySettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>HotkeySettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\PortableSettingsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,6 +156,10 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Settings\HotkeySettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>HotkeySettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
