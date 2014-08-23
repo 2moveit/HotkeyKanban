@@ -27,7 +27,7 @@ namespace KCT.HotkeyKanban.UI
             Window window = base.CreateWindow(rootModel, isDialog, context, settings);
             if (rootModel is IShell)
             {
-                window.Loaded += (s, e) => HotkeyManager.RegisterWindow((Window)s, (w) =>
+                window.Loaded += (s, e) => HotkeyManager.Instance.RegisterWindow((Window)s, (w) =>
                 {
                     w.Activate();
                     w.WindowState = WindowState.Normal;
