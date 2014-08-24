@@ -123,10 +123,13 @@
     <Compile Include="HotkeyAPI\HotkeyAlreadyInUseException.cs" />
     <Compile Include="HotkeyAPI\HotkeyWinApi.cs" />
     <Compile Include="HotkeyAPI\Keys.cs" />
+    <Compile Include="KanbanState.cs" />
+    <Compile Include="Task.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HotkeyAPI\ModifierKeys.cs" />
     <Compile Include="HotkeyManager.cs" />
+    <Compile Include="KanbanBoard.cs" />
     <Compile Include="Settings\HotkeySettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

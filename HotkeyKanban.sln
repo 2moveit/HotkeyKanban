@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotkeyKanban", "HotkeyKanba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotkeyKanban.UI", "HotkeyKanban.UI\HotkeyKanban.UI.csproj", "{C68FE1F1-550D-4BBB-B5CE-68AE0BDA2023}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotkeyKanban.tests", "HotkeyKanban.tests\HotkeyKanban.tests.csproj", "{8232ED8E-AFE9-4996-BF07-827F129F46AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,16 @@ Global
 		{C68FE1F1-550D-4BBB-B5CE-68AE0BDA2023}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C68FE1F1-550D-4BBB-B5CE-68AE0BDA2023}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C68FE1F1-550D-4BBB-B5CE-68AE0BDA2023}.Release|x86.ActiveCfg = Release|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8232ED8E-AFE9-4996-BF07-827F129F46AE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
