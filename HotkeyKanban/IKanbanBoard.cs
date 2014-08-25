@@ -55,5 +55,6 @@ namespace KCT.HotkeyKanban
         IDictionary<DateTime, IEnumerable<Task>> GetArchivedTasks();
         void Load(FileInfo file);
         void Save(FileInfo file);
+        IEnumerable<Task> GetTasks(KanbanState state);
     }
 }

@@ -103,6 +103,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -124,7 +127,9 @@
     <Compile Include="HotkeyAPI\HotkeyWinApi.cs" />
     <Compile Include="HotkeyAPI\Keys.cs" />
     <Compile Include="IKanbanBoard.cs" />
+    <Compile Include="IO\IPersist.cs" />
     <Compile Include="KanbanState.cs" />
+    <Compile Include="IO\Persistency.cs" />
     <Compile Include="Task.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +160,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

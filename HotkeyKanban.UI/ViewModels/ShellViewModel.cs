@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Windows.Input;
 using Caliburn.Micro;
 
@@ -26,13 +28,22 @@ namespace KCT.HotkeyKanban.UI.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            Lanes.Add(new LaneViewModel(KanbanState.Backlog));
-            Lanes.Add(new LaneViewModel(KanbanState.Sheduled));
-            Lanes.Add(new LaneViewModel(KanbanState.Waiting));
-            Lanes.Add(new LaneViewModel(KanbanState.WorkInProgress));
-            Lanes.Add(new LaneViewModel(KanbanState.Done));
+            board.Load(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Kanban.board")));
+            LoadTasks(KanbanState.Backlog);
+            LoadTasks(KanbanState.Sheduled);
+            LoadTasks(KanbanState.Waiting);
+            LoadTasks(KanbanState.WorkInProgress);
+            LoadTasks(KanbanState.Done);
         }
 
+        private void LoadTasks(KanbanState state)
+        {
+            Lanes.Add(new LaneViewModel(state));
+            foreach (Task task in board.GetTasks(state))
+            {
+                Lanes[(int)state].Cards.Add(new CardViewModel { Id = task.Id, Description = task.Description });
+            }
+        }
 
         private ObservableCollection<LaneViewModel> lanes;
         public ObservableCollection<LaneViewModel> Lanes
@@ -102,6 +113,8 @@ namespace KCT.HotkeyKanban.UI.ViewModels
            //TODO: var task = board.GetTasks(taskId);
             Lanes.Single(l => l.State == KanbanState.Backlog).Cards.Add(new CardViewModel { Description = Input });
             NotifyOfPropertyChange(() => Lanes);
+
+            board.Save(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Kanban.board")));
         }
     }
 }

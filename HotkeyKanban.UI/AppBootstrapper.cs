@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Caliburn.Micro;
+using KCT.HotkeyKanban.IO;
 using KCT.HotkeyKanban.UI.ViewModels;
 
 namespace KCT.HotkeyKanban.UI {
@@ -19,6 +20,7 @@ namespace KCT.HotkeyKanban.UI {
             container.Singleton<IEventAggregator, EventAggregator>();
             container.PerRequest<IShell, ShellViewModel>();
             container.Singleton<IKanbanBoard, KanbanBoard>();
+            container.PerRequest<IPersist, Persistency>();
             MessageBinder.SpecialValues.Add("$pressedkey", (context) =>
             {
                 //http://stackoverflow.com/questions/16719496/caliburn-micro-enter-key-event

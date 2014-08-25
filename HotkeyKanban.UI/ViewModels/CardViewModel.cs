@@ -10,6 +10,7 @@ namespace KCT.HotkeyKanban.UI.ViewModels
     public class CardViewModel : Screen
     {
         private string description;
+        private Guid id;
 
         public string Description
         {
@@ -19,6 +20,17 @@ namespace KCT.HotkeyKanban.UI.ViewModels
                 if (value == description) return;
                 description = value;
                 NotifyOfPropertyChange(() => Description);
+            }
+        }
+
+        public Guid Id
+        {
+            get { return id; }
+            set
+            {
+                if (value.Equals(id)) return;
+                id = value;
+                NotifyOfPropertyChange(() => Id);
             }
         }
     }

@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using KCT.HotkeyKanban.IO;
 
 namespace KCT.HotkeyKanban
 {
     public class KanbanBoard : IKanbanBoard
     {
+        private readonly IPersist persistency;
         private readonly Dictionary<DateTime, IEnumerable<Task>> archive = new Dictionary<DateTime, IEnumerable<Task>>();
-        private readonly List<Task> board = new List<Task>();
+        private List<Task> board = new List<Task>();
+
+        public KanbanBoard(IPersist persistency)
+        {
+            this.persistency = persistency;
+        }
 
         /// <summary>
         ///     Create new task in backlog
@@ -111,10 +118,31 @@ namespace KCT.HotkeyKanban
 
         public void Load(FileInfo file)
         {
+            board = persistency.FromFile<List<Task>>(file) ?? new List<Task>();
         }
 
         public void Save(FileInfo file)
         {
+            persistency.ToFile(board, file);
+        }
+
+        public IEnumerable<Task> GetTasks(KanbanState state)
+        {
+            switch (state)
+            {
+                case KanbanState.Backlog:
+                    return GetBacklogTasks();
+                case KanbanState.Done:
+                    return GetClosedTasks();
+                case KanbanState.Sheduled:
+                    return GetSheduledTasks();
+                case KanbanState.Waiting:
+                    return GetWaitingTasks();
+                case KanbanState.WorkInProgress:
+                    return GetTasksInProgress();
+                default:
+                    return new List<Task>();
+            }
         }
     }
 }
