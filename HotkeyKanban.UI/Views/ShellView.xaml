@@ -14,7 +14,12 @@
             <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <AdornerDecorator Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <AdornerDecorator Grid.Column="0" Grid.Row="0">
             <TextBox x:Name="Input"     
                  Width="200"
                  cal:Message.Attach="[Event KeyDown] = [Action ExecuteAddTask($pressedkey)]">
@@ -28,6 +33,21 @@
         </AdornerDecorator>
         <Button x:Name="OpenOptions"
                 Grid.Column="2"
+                Grid.Row="0"
                 Content="Options..." />
+        <ListView x:Name="Lanes" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl cal:View.Model="{Binding}" 
+                    VerticalContentAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

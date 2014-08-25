@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace KCT.HotkeyKanban
 {
-    public class KanbanBoard
+    public class KanbanBoard : IKanbanBoard
     {
         private readonly Dictionary<DateTime, IEnumerable<Task>> archive = new Dictionary<DateTime, IEnumerable<Task>>();
         private readonly List<Task> board = new List<Task>();
@@ -14,9 +14,9 @@ namespace KCT.HotkeyKanban
         ///     Create new task in backlog
         /// </summary>
         /// <param name="taskDescription"></param>
-        public void CreateTask(string taskDescription)
+        public void CreateTask(Guid taskId, string taskDescription)
         {
-            board.Add(new Task(Guid.NewGuid(), taskDescription));
+            board.Add(new Task(taskId, taskDescription));
         }
 
         /// <summary>

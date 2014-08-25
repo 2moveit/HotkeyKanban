@@ -13,6 +13,7 @@ namespace HotkeyKanban.tests
     public class KanbanBoardTests
     {
         const string TaskDescription = "testTask";
+        Guid taskId = Guid.NewGuid();
         private readonly KanbanBoard sut;
         public KanbanBoardTests()
         {
@@ -21,7 +22,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void CreateTask_createsBacklogItem()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> backlogTasks = sut.GetBacklogTasks();
 
             backlogTasks.First().Description.ShouldEqual(TaskDescription);
@@ -30,7 +31,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void SheduleTask_MovesItemFromBacklogToSheduledTasks()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> initialBacklogTasks = sut.GetBacklogTasks();
 
             sut.SheduleTask(initialBacklogTasks.First().Id);
@@ -43,7 +44,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void BeginWorkOnTask_MovesItemFromSheduledToWorkInProgress()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> initialBacklogTasks = sut.GetBacklogTasks();
             var id = initialBacklogTasks.First().Id;
             sut.SheduleTask(id);
@@ -61,7 +62,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void CloseTask_MovesItemFromWorkInProgressToDone()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> initialBacklogTasks = sut.GetBacklogTasks();
             var id = initialBacklogTasks.First().Id;
             sut.SheduleTask(id);
@@ -79,7 +80,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void InteruptTask_MovesItemFromWorkInProgressToWaiting()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> initialBacklogTasks = sut.GetBacklogTasks();
             var id = initialBacklogTasks.First().Id;
             sut.SheduleTask(id);
@@ -97,7 +98,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void ContinueTask_MovesItemFromWaitingToWorkInProgress()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> initialBacklogTasks = sut.GetBacklogTasks();
             var id = initialBacklogTasks.First().Id;
             sut.SheduleTask(id);
@@ -117,7 +118,7 @@ namespace HotkeyKanban.tests
         [Fact]
         public void ArchiveTask_MovesItemFromClosedToArchive()
         {
-            sut.CreateTask(TaskDescription);
+            sut.CreateTask(taskId, TaskDescription);
             IEnumerable<Task> initialBacklogTasks = sut.GetBacklogTasks();
             var id = initialBacklogTasks.First().Id;
             sut.SheduleTask(id);

@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
-using KCT.HotkeyKanban.UI.Views;
 
 namespace KCT.HotkeyKanban.UI.ViewModels
 {
@@ -9,13 +10,39 @@ namespace KCT.HotkeyKanban.UI.ViewModels
     {
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator eventAggregator;
-
-        public ShellViewModel(IWindowManager windowManager, IEventAggregator eventAggregator)
+        private readonly IKanbanBoard board;
+        public ShellViewModel(IWindowManager windowManager, IEventAggregator eventAggregator,
+            IKanbanBoard board)
         {
+
             this.windowManager = windowManager;
+            this.board = board;
             this.eventAggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             DisplayName = "Hotkey Kanban";
+            Lanes = new ObservableCollection<LaneViewModel>();
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            Lanes.Add(new LaneViewModel(KanbanState.Backlog));
+            Lanes.Add(new LaneViewModel(KanbanState.Sheduled));
+            Lanes.Add(new LaneViewModel(KanbanState.Waiting));
+            Lanes.Add(new LaneViewModel(KanbanState.WorkInProgress));
+            Lanes.Add(new LaneViewModel(KanbanState.Done));
+        }
+
+
+        private ObservableCollection<LaneViewModel> lanes;
+        public ObservableCollection<LaneViewModel> Lanes
+        {
+            get { return lanes; }
+            set
+            {
+                lanes = value;
+                NotifyOfPropertyChange(() => Lanes);
+            }
         }
 
         public void ExecuteAddTask(Key key)
@@ -71,7 +98,10 @@ namespace KCT.HotkeyKanban.UI.ViewModels
 
         public void AddTask()
         {
-            MessageBox.Show(string.Format("Added task: {0}", Input));
+            board.CreateTask(Guid.NewGuid(), Input);
+           //TODO: var task = board.GetTasks(taskId);
+            Lanes.Single(l => l.State == KanbanState.Backlog).Cards.Add(new CardViewModel { Description = Input });
+            NotifyOfPropertyChange(() => Lanes);
         }
     }
 }

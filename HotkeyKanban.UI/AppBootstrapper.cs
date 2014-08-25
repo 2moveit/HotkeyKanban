@@ -18,6 +18,7 @@ namespace KCT.HotkeyKanban.UI {
             container.Singleton<IWindowManager, AppWindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
             container.PerRequest<IShell, ShellViewModel>();
+            container.Singleton<IKanbanBoard, KanbanBoard>();
             MessageBinder.SpecialValues.Add("$pressedkey", (context) =>
             {
                 //http://stackoverflow.com/questions/16719496/caliburn-micro-enter-key-event

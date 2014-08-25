@@ -123,6 +123,7 @@
     <Compile Include="HotkeyAPI\HotkeyAlreadyInUseException.cs" />
     <Compile Include="HotkeyAPI\HotkeyWinApi.cs" />
     <Compile Include="HotkeyAPI\Keys.cs" />
+    <Compile Include="IKanbanBoard.cs" />
     <Compile Include="KanbanState.cs" />
     <Compile Include="Task.cs" />
   </ItemGroup>
