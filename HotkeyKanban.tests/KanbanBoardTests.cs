@@ -17,7 +17,7 @@ namespace HotkeyKanban.tests
         private readonly KanbanBoard sut;
         public KanbanBoardTests()
         {
-            sut = new KanbanBoard();
+            sut = new KanbanBoard(new PersistencyMockup());
         }
         [Fact]
         public void CreateTask_createsBacklogItem()

@@ -144,5 +144,10 @@ namespace KCT.HotkeyKanban
                     return new List<Task>();
             }
         }
+
+        public Task GetTask(Guid taskId)
+        {
+            return board.SingleOrDefault(t => t.Id.Equals(taskId));
+        }
     }
 }

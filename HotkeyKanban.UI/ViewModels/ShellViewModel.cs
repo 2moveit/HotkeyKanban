@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -29,20 +30,35 @@ namespace KCT.HotkeyKanban.UI.ViewModels
         {
             base.OnInitialize();
             board.Load(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Kanban.board")));
-            LoadTasks(KanbanState.Backlog);
-            LoadTasks(KanbanState.Sheduled);
-            LoadTasks(KanbanState.Waiting);
-            LoadTasks(KanbanState.WorkInProgress);
-            LoadTasks(KanbanState.Done);
+            InitLane(KanbanState.Backlog);
+            InitLane(KanbanState.Sheduled);
+            InitLane(KanbanState.Waiting);
+            InitLane(KanbanState.WorkInProgress);
+            InitLane(KanbanState.Done);
+        }
+
+        private void InitLane(KanbanState state)
+        {
+            Lanes.Add(new LaneViewModel(state));
+            LoadTasks(state);
         }
 
         private void LoadTasks(KanbanState state)
         {
-            Lanes.Add(new LaneViewModel(state));
-            foreach (Task task in board.GetTasks(state))
+            IList<Task> tasks = board.GetTasks(state).ToList();
+            var cards = new ObservableCollection<CardViewModel>();
+            for (int index = 0; index < tasks.Count; index++)
             {
-                Lanes[(int)state].Cards.Add(new CardViewModel { Id = task.Id, Description = task.Description });
+                cards.Add(new CardViewModel(tasks[index], CreateShortId(state, index)));
             }
+            Lanes[(int)state].Cards = cards;
+        }
+
+        private int CreateShortId(KanbanState state, int cardIndex)
+        {
+            string stateString = ((int) state).ToString();
+            string cardIndexString = (cardIndex + 1).ToString();
+            return int.Parse(stateString + cardIndexString);
         }
 
         private ObservableCollection<LaneViewModel> lanes;
@@ -109,9 +125,11 @@ namespace KCT.HotkeyKanban.UI.ViewModels
 
         public void AddTask()
         {
-            board.CreateTask(Guid.NewGuid(), Input);
-           //TODO: var task = board.GetTasks(taskId);
-            Lanes.Single(l => l.State == KanbanState.Backlog).Cards.Add(new CardViewModel { Description = Input });
+            var taskId = Guid.NewGuid();
+            board.CreateTask(taskId, Input);
+            LoadTasks(KanbanState.Backlog);
+            //Task task = board.GetTask(taskId);
+            //Lanes.Single(l => l.State == KanbanState.Backlog).Cards.Add(new CardViewModel(task));
             NotifyOfPropertyChange(() => Lanes);
 
             board.Save(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Kanban.board")));

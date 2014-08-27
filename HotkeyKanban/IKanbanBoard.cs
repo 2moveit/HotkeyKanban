@@ -56,5 +56,6 @@ namespace KCT.HotkeyKanban
         void Load(FileInfo file);
         void Save(FileInfo file);
         IEnumerable<Task> GetTasks(KanbanState state);
+        Task GetTask(Guid taskId);
     }
 }

@@ -4,8 +4,8 @@
     {
         Backlog,
         Sheduled,
-        WorkInProgress,
         Waiting,
+        WorkInProgress,
         Done,
         Archived
     }

@@ -9,8 +9,29 @@ namespace KCT.HotkeyKanban.UI.ViewModels
 {
     public class CardViewModel : Screen
     {
+        private readonly Task task;
         private string description;
         private Guid id;
+        private int shortId;
+
+        public CardViewModel(Task task, int shortId)
+        {
+            this.task = task;
+            Id = task.Id;
+            Description = task.Description;
+            ShortId = shortId;
+        }
+
+        public int ShortId
+        {
+            get { return shortId; }
+            set
+            {
+                if (value == shortId) return;
+                shortId = value;
+                NotifyOfPropertyChange(() => ShortId);
+            }
+        }
 
         public string Description
         {
