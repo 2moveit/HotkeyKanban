@@ -149,5 +149,13 @@ namespace KCT.HotkeyKanban
         {
             return board.SingleOrDefault(t => t.Id.Equals(taskId));
         }
+
+        public void MoveTask(Guid taskId)
+        {
+            var task = board.Single(t => t.Id == taskId);
+            task.State = task.State.GetNextState();
+        }
+
+        
     }
 }

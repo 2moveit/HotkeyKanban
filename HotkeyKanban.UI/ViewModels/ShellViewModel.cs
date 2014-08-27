@@ -56,7 +56,7 @@ namespace KCT.HotkeyKanban.UI.ViewModels
 
         private int CreateShortId(KanbanState state, int cardIndex)
         {
-            string stateString = ((int) state).ToString();
+            string stateString = (((int) state)+1).ToString();
             string cardIndexString = (cardIndex + 1).ToString();
             return int.Parse(stateString + cardIndexString);
         }
@@ -76,10 +76,19 @@ namespace KCT.HotkeyKanban.UI.ViewModels
         {
             if (key == Key.Enter && Input != string.Empty)
             {
-                AddTask();
+                int id;
+                if (int.TryParse(Input, out id))
+                {
+                    var stateIndex = int.Parse(Input.First().ToString()) - 1;
+                    MoveTask(Lanes[stateIndex].Cards.Single(c=>c.ShortId == id));
+                }
+                else
+                    AddTask();
                 Input = string.Empty;
             }
         }
+
+ 
 
         public void Handle(HotkeyPressed e)
         {
@@ -128,11 +137,18 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             var taskId = Guid.NewGuid();
             board.CreateTask(taskId, Input);
             LoadTasks(KanbanState.Backlog);
-            //Task task = board.GetTask(taskId);
-            //Lanes.Single(l => l.State == KanbanState.Backlog).Cards.Add(new CardViewModel(task));
             NotifyOfPropertyChange(() => Lanes);
 
             board.Save(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Kanban.board")));
+        }
+
+        private void MoveTask(CardViewModel task)
+        {
+            board.MoveTask(task.Id);
+            LoadTasks(task.State);
+            KanbanState nextState = task.State.GetNextState();
+            LoadTasks(nextState);
+
         }
     }
 }

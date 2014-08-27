@@ -13,6 +13,7 @@ namespace KCT.HotkeyKanban.UI.ViewModels
         private string description;
         private Guid id;
         private int shortId;
+        private KanbanState state;
 
         public CardViewModel(Task task, int shortId)
         {
@@ -20,6 +21,18 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             Id = task.Id;
             Description = task.Description;
             ShortId = shortId;
+            State = task.State;
+        }
+
+        public KanbanState State
+        {
+            get { return state; }
+            set
+            {
+                if (value == state) return;
+                state = value;
+                NotifyOfPropertyChange(() => State);
+            }
         }
 
         public int ShortId
