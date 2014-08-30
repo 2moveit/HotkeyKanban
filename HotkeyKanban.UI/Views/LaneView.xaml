@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cal="http://www.caliburnproject.org"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
     <Border Height="500" Width="210" BorderBrush="Black" BorderThickness="1" Margin="10,10,10,10">
         <StackPanel Orientation="Vertical">
             <TextBlock x:Name="State"/>
-            <ListView x:Name="Cards">
+            <ListView x:Name="Cards" Height="482" HorizontalContentAlignment="Stretch"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ContentControl cal:View.Model="{Binding}" 
+                        <ContentControl cal:View.Model="{Binding}"
                     VerticalContentAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch" />
+                    HorizontalContentAlignment="Stretch"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

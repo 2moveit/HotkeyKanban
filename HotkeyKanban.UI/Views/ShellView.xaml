@@ -10,32 +10,36 @@
              mc:Ignorable="d">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="10"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <AdornerDecorator Grid.Column="0" Grid.Row="0">
-            <TextBox x:Name="Input"     
-                 Width="200"
+        <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal">
+            <TextBlock Text="Create task:" Margin="0,0,10,0"/>
+            <AdornerDecorator >
+                <TextBox x:Name="Input"     
+                 Width="300"
                  cal:Message.Attach="[Event KeyDown] = [Action ExecuteAddTask($pressedkey)]">
-                <watermark:WatermarkService.Watermark>
-                    <TextBlock>Type here to enter new task</TextBlock>
-                </watermark:WatermarkService.Watermark>
-                <i:Interaction.Behaviors>
-                    <behavior:FocusBehavior HasInitialFocus="True" IsFocused="{Binding InputIsFocused, Mode=TwoWay}"/>
-                </i:Interaction.Behaviors>
-            </TextBox>
-        </AdornerDecorator>
+                    <watermark:WatermarkService.Watermark>
+                        <TextBlock>Type here to enter new task</TextBlock>
+                    </watermark:WatermarkService.Watermark>
+                    <i:Interaction.Behaviors>
+                        <behavior:FocusBehavior HasInitialFocus="True" IsFocused="{Binding InputIsFocused, Mode=TwoWay}"/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+            </AdornerDecorator>
+        </StackPanel>
         <Button x:Name="OpenOptions"
                 Grid.Column="2"
                 Grid.Row="0"
                 Content="Options..." />
-        <ListView x:Name="Lanes" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+        <ListView x:Name="Lanes" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" BorderThickness="0">
+
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>

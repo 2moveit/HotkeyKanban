@@ -138,8 +138,7 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             board.CreateTask(taskId, Input);
             LoadTasks(KanbanState.Backlog);
             NotifyOfPropertyChange(() => Lanes);
-
-            board.Save(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Kanban.board")));
+            SaveBoard();
         }
 
         private void MoveTask(CardViewModel task)
@@ -148,7 +147,12 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             LoadTasks(task.State);
             KanbanState nextState = task.State.GetNextState();
             LoadTasks(nextState);
+            SaveBoard();
+        }
 
+        private void SaveBoard()
+        {
+            board.Save(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Kanban.board")));
         }
     }
 }
