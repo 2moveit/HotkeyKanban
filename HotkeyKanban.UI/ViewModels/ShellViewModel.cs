@@ -51,7 +51,8 @@ namespace KCT.HotkeyKanban.UI.ViewModels
             {
                 cards.Add(new CardViewModel(tasks[index], CreateShortId(state, index)));
             }
-            Lanes[(int)state].Cards = cards;
+            if((int)state < Lanes.Count)
+                Lanes[(int)state].Cards = cards;
         }
 
         private int CreateShortId(KanbanState state, int cardIndex)
@@ -79,8 +80,11 @@ namespace KCT.HotkeyKanban.UI.ViewModels
                 int id;
                 if (int.TryParse(Input, out id))
                 {
+                    if (id < 10)
+                        return;
                     var stateIndex = int.Parse(Input.First().ToString()) - 1;
-                    MoveTask(Lanes[stateIndex].Cards.Single(c=>c.ShortId == id));
+                    if(stateIndex < Lanes.Count)
+                        MoveTask(Lanes[stateIndex].Cards.SingleOrDefault(c=>c.ShortId == id));
                 }
                 else
                     AddTask();
@@ -143,6 +147,8 @@ namespace KCT.HotkeyKanban.UI.ViewModels
 
         private void MoveTask(CardViewModel task)
         {
+            if (task == null)
+                return;
             board.MoveTask(task.Id);
             LoadTasks(task.State);
             KanbanState nextState = task.State.GetNextState();
